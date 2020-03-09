@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
-import Firebase from "../config/Firebase";
+import Fire from "../Fire";
 
 class Profile extends React.Component {
   handleSignout = () => {
-    Firebase.auth().signOut();
-    //this.props.navigation.navigate("Login");
+    Firebase.shared.signOut();
   };
+
   render() {
     return (
       <View style={styles.container}>

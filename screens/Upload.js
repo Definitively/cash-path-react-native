@@ -27,7 +27,7 @@ class Upload extends React.Component {
     image: "",
     location: ""
   };
-
+  //Thumbnail generator
   generateThumbnail = async () => {
     console.log("Started Thumbnail creation..");
     try {
@@ -44,6 +44,7 @@ class Upload extends React.Component {
       console.warn(e);
     }
   };
+  //Upload to Firebase
   handlePost = () => {
     console.log("Firebase Upload started");
     Fire.shared
@@ -68,7 +69,7 @@ class Upload extends React.Component {
         alert(error);
       });
   };
-
+  //Get the video and generate a thumbnail
   getVideo = async () => {
     console.log("Wating for video selection...");
     let result = await ImagePicker.launchImageLibraryAsync({

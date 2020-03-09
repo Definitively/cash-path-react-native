@@ -4,30 +4,66 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Text
+  Text,
+  View
 } from "react-native";
+import Fire from "../Fire";
 
 class Signup extends React.Component {
-  // handleSignUp = () => {
-  //   this.props.signup();
-  //   this.props.navigation.navigate("Feed");
-  // };
+  state = {
+    user: {
+      name: "",
+      email: "",
+      password: ""
+    },
+    errorMessage: null
+  };
+
+  handleSignUp = () => {
+    Fire.shared.createUser(this.state.user);
+  };
 
   render() {
     return (
       <KeyboardAvoidingView style={styles.container}>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Email"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Password"
-          secureTextEntry={true}
-          autoCapitalize="none"
-        />
-        <TouchableOpacity style={styles.button}>
+        <View style={styles.form}>
+          <View>
+            <Text style={styles.inputTitle}>Full Name</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={name =>
+                this.setState({ user: { ...this.state.user, name } })
+              }
+              value={this.state.user.name}
+            ></TextInput>
+          </View>
+
+          <View style={{ marginTop: 32 }}>
+            <Text style={styles.inputTitle}>Email Address</Text>
+            <TextInput
+              style={styles.input}
+              autoCapitalize="none"
+              onChangeText={email =>
+                this.setState({ user: { ...this.state.user, email } })
+              }
+              value={this.state.user.email}
+            ></TextInput>
+          </View>
+
+          <View style={{ marginTop: 32 }}>
+            <Text style={styles.inputTitle}>Password</Text>
+            <TextInput
+              style={styles.input}
+              secureTextEntry
+              autoCapitalize="none"
+              onChangeText={password =>
+                this.setState({ user: { ...this.state.user, password } })
+              }
+              value={this.state.user.password}
+            ></TextInput>
+          </View>
+        </View>
+        <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
           <Text style={styles.buttonText}>Signup</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -69,6 +105,23 @@ const styles = StyleSheet.create({
   },
   buttonSignup: {
     fontSize: 12
+  },
+  form: {
+    marginBottom: 48,
+    marginHorizontal: 30
+  },
+  inputTitle: {
+    color: "#8A8F9E",
+    fontSize: 15,
+    textTransform: "uppercase"
+  },
+  input: {
+    borderBottomColor: "#8A8F9E",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    height: 40,
+    width: 300,
+    fontSize: 15,
+    color: "#161F3D"
   }
 });
 

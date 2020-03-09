@@ -1,5 +1,6 @@
 import * as React from "react";
 import Fire from "./Fire";
+import Firebase from "./config/Firebase";
 
 //Fix Timer error
 import { YellowBox } from "react-native";
@@ -28,7 +29,6 @@ import useLinking from "./navigation/useLinking";
 
 const Stack = createStackNavigator();
 const Auth = createStackNavigator();
-const loggedIn = null;
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -45,16 +45,6 @@ export default function App(props) {
         // Load our initial navigation state
         setInitialNavigationState(await getInitialState());
 
-        // Check for user login
-        if (Fire.shared.uid != null) {
-          loggedIn = 1;
-        } else {
-          firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-              loggedIn = 1;
-            }
-          });
-        }
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
@@ -71,6 +61,19 @@ export default function App(props) {
 
     loadResourcesAndDataAsync();
   }, []);
+
+  //Listener for user login and logout
+  function Authenticated() {
+    Firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in.
+        return true;
+      } else {
+        // No user is signed in.
+        return false;
+      }
+    });
+  }
 
   function userAuth() {
     return (
@@ -92,14 +95,18 @@ export default function App(props) {
           initialState={initialNavigationState}
         >
           <Stack.Navigator>
-            {loggedIn === null ? (
+            {Authenticated() === false ? (
               <Stack.Screen
                 name="Auth"
                 component={userAuth}
                 options={{ headerShown: false }}
               />
             ) : (
-              <Stack.Screen name="Root" component={BottomTabNavigator} />
+              <Stack.Screen
+                name="Root"
+                component={BottomTabNavigator}
+                options={{ title: `Cash Path` }}
+              />
             )}
           </Stack.Navigator>
         </NavigationContainer>

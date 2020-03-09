@@ -9,7 +9,6 @@ import {
   Button,
   View
 } from "react-native";
-import * as firebase from "firebase";
 import Fire from "../Fire";
 
 class Login extends React.Component {
@@ -22,9 +21,8 @@ class Login extends React.Component {
 
   handleLogin = () => {
     const { email, password } = this.state;
-
-    firebase
-      .auth()
+    console.log("Attemping login...");
+    Fire.auth()
       .signInWithEmailAndPassword(email, password)
       .catch(error => alert(error));
     //this.setState({ errorMessage: error.message }));
@@ -55,10 +53,16 @@ class Login extends React.Component {
             ></TextInput>
           </View>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => this.handleLogin()}
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <Button title="Don't have an account yet? Sign up" onPress />
+        <Button
+          title="Don't have an account yet? Sign up"
+          onPress={() => this.props.navigation.navigate("Signup")}
+        />
         <Button title="Forgot your password?" />
       </KeyboardAvoidingView>
     );
