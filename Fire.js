@@ -103,14 +103,12 @@ class Fire {
   };
 
   createUser = async user => {
-    let remoteUri = null;
-
     try {
       await firebase
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password);
 
-      let db = this.firestore.collection("users").doc(this.uid);
+      let db = this.firestore.collection("users").add(this.uid);
 
       db.set({
         name: user.name,
@@ -119,10 +117,6 @@ class Fire {
     } catch (error) {
       alert("Error: ", error);
     }
-  };
-
-  signOut = () => {
-    firebase.auth().signOut();
   };
 
   //Helpers

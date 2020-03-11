@@ -16,8 +16,8 @@ import * as ImagePicker from "expo-image-picker";
 import * as VideoThumbnails from "expo-video-thumbnails";
 
 //Permissions for Camera Use
-//import Constants from "expo-constants";
-//import * as Permissions from "expo-permissions";
+import Constants from "expo-constants";
+import * as Permissions from "expo-permissions";
 
 class Upload extends React.Component {
   //Initial State
@@ -27,25 +27,10 @@ class Upload extends React.Component {
     image: "",
     location: ""
   };
-  //Thumbnail generator
-  generateThumbnail = async () => {
-    console.log("Started Thumbnail creation..");
-    try {
-      let thumbnail = await VideoThumbnails.getThumbnailAsync(
-        this.state.video.uri,
-        {
-          time: 15000
-        }
-      );
-      console.log(thumbnail);
-      console.log("Thumbnail Created!");
-      this.setState({ image: thumbnail });
-    } catch (e) {
-      console.warn(e);
-    }
-  };
+
   //Upload to Firebase
   handlePost = () => {
+    this.props.navigation.navigate("Feed");
     console.log("Firebase Upload started");
     Fire.shared
       .postDollar({
@@ -87,6 +72,25 @@ class Upload extends React.Component {
       this.generateThumbnail();
     }
   };
+
+  //Thumbnail generator
+  generateThumbnail = async () => {
+    console.log("Started Thumbnail creation..");
+    try {
+      let thumbnail = await VideoThumbnails.getThumbnailAsync(
+        this.state.video.uri,
+        {
+          time: 15000
+        }
+      );
+      console.log(thumbnail);
+      console.log("Thumbnail Created!");
+      this.setState({ image: thumbnail });
+    } catch (e) {
+      console.warn(e);
+    }
+  };
+
   //Render to screen
   render() {
     return (

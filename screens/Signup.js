@@ -21,6 +21,7 @@ class Signup extends React.Component {
 
   handleSignUp = () => {
     Fire.shared.createUser(this.state.user);
+    this.props.navigation.navigate;
   };
 
   render() {

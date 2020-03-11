@@ -1,10 +1,22 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
-import Fire from "../Fire";
+import Firebase from "../config/Firebase";
 
 class Profile extends React.Component {
+  state = {
+    user: "",
+    pass: "",
+    email: ""
+  };
+
   handleSignout = () => {
-    Firebase.shared.signOut();
+    try {
+      Firebase.auth().signOut();
+      console.log("Logout Success!");
+    } catch (e) {
+      console.log("A Logout error has occurred..", e);
+    }
+    this.props.navigation.navigate("Auth", { screen: "Login" });
   };
 
   render() {

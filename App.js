@@ -1,18 +1,4 @@
 import * as React from "react";
-import Fire from "./Fire";
-import Firebase from "./config/Firebase";
-
-//Fix Timer error
-import { YellowBox } from "react-native";
-import _ from "lodash";
-
-YellowBox.ignoreWarnings(["Setting a timer"]);
-const _console = _.clone(console);
-console.warn = message => {
-  if (message.indexOf("Setting a timer") <= -1) {
-    _console.warn(message);
-  }
-};
 
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { SplashScreen } from "expo";
@@ -26,6 +12,18 @@ import Signup from "./screens/Signup";
 
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
+
+//Fix  Android Timer error
+import { YellowBox } from "react-native";
+import _ from "lodash";
+
+YellowBox.ignoreWarnings(["Setting a timer"]);
+const _console = _.clone(console);
+console.warn = message => {
+  if (message.indexOf("Setting a timer") <= -1) {
+    _console.warn(message);
+  }
+};
 
 const Stack = createStackNavigator();
 const Auth = createStackNavigator();
@@ -63,17 +61,6 @@ export default function App(props) {
   }, []);
 
   //Listener for user login and logout
-  function Authenticated() {
-    Firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        // User is signed in.
-        return true;
-      } else {
-        // No user is signed in.
-        return false;
-      }
-    });
-  }
 
   function userAuth() {
     return (
@@ -95,19 +82,19 @@ export default function App(props) {
           initialState={initialNavigationState}
         >
           <Stack.Navigator>
-            {Authenticated() === false ? (
-              <Stack.Screen
-                name="Auth"
-                component={userAuth}
-                options={{ headerShown: false }}
-              />
-            ) : (
-              <Stack.Screen
-                name="Root"
-                component={BottomTabNavigator}
-                options={{ title: `Cash Path` }}
-              />
-            )}
+            <Stack.Screen
+              name="Auth"
+              component={userAuth}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Root"
+              component={BottomTabNavigator}
+              options={{
+                title: `Cash Path`,
+                headerLeft: false
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

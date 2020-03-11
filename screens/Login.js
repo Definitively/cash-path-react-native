@@ -9,22 +9,33 @@ import {
   Button,
   View
 } from "react-native";
-import Fire from "../Fire";
+import Firebase from "../config/Firebase";
 
 class Login extends React.Component {
   //Initial State
   state = {
     email: "",
     password: "",
-    errorMessage: null
+    errorMessage: ""
+  };
+
+  componentDidMount = () => {
+    Firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.props.navigation.navigate("Root", { Screen: "Feed" });
+      }
+    });
   };
 
   handleLogin = () => {
     const { email, password } = this.state;
     console.log("Attemping login...");
-    Fire.auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch(error => alert(error));
+    try {
+      Firebase.auth().signInWithEmailAndPassword(email, password);
+      console.log("Login success!");
+    } catch (e) {
+      console.log("Login error has occured...", error);
+    }
     //this.setState({ errorMessage: error.message }));
   };
 
