@@ -16,7 +16,7 @@ class Profile extends React.Component {
     } catch (e) {
       console.log("A Logout error has occurred..", e);
     }
-    this.props.navigation.navigate("Auth", { screen: "Login" });
+    this.props.navigation.replace("Login");
   };
 
   render() {

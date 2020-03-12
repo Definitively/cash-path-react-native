@@ -91,8 +91,13 @@ export default function App(props) {
         >
           <Stack.Navigator>
             <Stack.Screen
-              name="Auth"
-              component={userAuth}
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Signup"
+              component={Signup}
               options={{ headerShown: false }}
             />
             <Stack.Screen

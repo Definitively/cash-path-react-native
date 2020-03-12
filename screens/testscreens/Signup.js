@@ -8,7 +8,7 @@ export default class Signup extends React.Component {
         <Text>This is the feed screen</Text>
         <Button
           title="Submit Email and Password"
-          onPress={() => this.props.navigation.navigate("Login")}
+          onPress={() => this.props.navigation.replace("Login")}
         />
       </View>
     );
