@@ -15,13 +15,11 @@ class Signup extends React.Component {
       name: "",
       email: "",
       password: ""
-    },
-    errorMessage: null
+    }
   };
 
   handleSignUp = () => {
     Fire.shared.createUser(this.state.user);
-    this.props.navigation.navigate;
   };
 
   render() {

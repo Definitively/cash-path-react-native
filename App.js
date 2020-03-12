@@ -1,5 +1,17 @@
 import * as React from "react";
 
+//Fix  Android Timer error
+import { YellowBox } from "react-native";
+import _ from "lodash";
+
+YellowBox.ignoreWarnings(["Setting a timer"]);
+const _console = _.clone(console);
+console.warn = message => {
+  if (message.indexOf("Setting a timer") <= -1) {
+    _console.warn(message);
+  }
+};
+
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { SplashScreen } from "expo";
 import * as Font from "expo-font";
@@ -12,18 +24,6 @@ import Signup from "./screens/Signup";
 
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
-
-//Fix  Android Timer error
-import { YellowBox } from "react-native";
-import _ from "lodash";
-
-YellowBox.ignoreWarnings(["Setting a timer"]);
-const _console = _.clone(console);
-console.warn = message => {
-  if (message.indexOf("Setting a timer") <= -1) {
-    _console.warn(message);
-  }
-};
 
 const Stack = createStackNavigator();
 const Auth = createStackNavigator();
@@ -65,8 +65,16 @@ export default function App(props) {
   function userAuth() {
     return (
       <Auth.Navigator>
-        <Auth.Screen name="Login" component={Login} />
-        <Auth.Screen name="Signup" component={Signup} />
+        <Auth.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Auth.Screen
+          name="Signup"
+          component={Signup}
+          options={{ headerShown: false }}
+        />
       </Auth.Navigator>
     );
   }

@@ -66,6 +66,7 @@ class Fire {
         })
         .then(ref => {
           console.log("Database update Success!");
+          alert("Dollar has been posted!");
           res(ref);
         })
         .catch(error => {
@@ -108,14 +109,14 @@ class Fire {
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password);
 
-      let db = this.firestore.collection("users").add(this.uid);
+      let db = this.firestore.collection("users").doc(this.uid);
 
       db.set({
         name: user.name,
         email: user.email
       });
     } catch (error) {
-      alert("Error: ", error);
+      console.log("Error in adding user: ", error);
     }
   };
 
