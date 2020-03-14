@@ -47,7 +47,6 @@ class Upload extends React.Component {
           location: ""
         });
         alert("Your post was successful!");
-        this.props.navigation.goBack();
       })
       .catch(error => {
         console.log("An error in uploading has occurred...", error);

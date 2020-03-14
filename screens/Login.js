@@ -22,7 +22,7 @@ class Login extends React.Component {
   componentDidMount = () => {
     Firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.props.navigation.replace("Root");
+        this.props.navigation.push("Root", { screen: "Feed" });
       }
     });
   };

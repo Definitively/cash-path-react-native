@@ -66,6 +66,7 @@ class Fire {
         })
         .then(ref => {
           console.log("Database update Success!");
+          console.log("Document written with ID: ", ref.id);
           alert("Dollar has been posted!");
           res(ref);
         })
@@ -109,6 +110,7 @@ class Fire {
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password);
 
+      alert("Account Registered!");
       let db = this.firestore.collection("users").doc(this.uid);
 
       db.set({

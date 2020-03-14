@@ -95,11 +95,7 @@ export default function App(props) {
               component={Login}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
-              name="Signup"
-              component={Signup}
-              options={{ headerShown: false }}
-            />
+            <Stack.Screen name="Signup" component={Signup} />
             <Stack.Screen
               name="Root"
               component={BottomTabNavigator}
